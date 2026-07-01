@@ -9,7 +9,7 @@ export const signup = async (req, res) => {
 
   const parsed = userSchemaValidation.safeParse(req.body);
   if (!parsed.success) {
-    logger.error("validation error while signup");
+    logger.error("validation error while signup",parsed.error);
     return res.status(400).json({
       success: false,
       message: "Please provide valid credentials!",
@@ -21,6 +21,7 @@ export const signup = async (req, res) => {
     const { username, email, password } = req.body;
     const doesUserExist = await User.findOne({ email });
     if (doesUserExist) {
+      logger.error("Email already exists, please login...")
       return res.status(409).json({
         success: false,
         message: "Email already exists, please login...",
@@ -35,6 +36,8 @@ export const signup = async (req, res) => {
       password: hashedPassword,
       role: "user",
     });
+
+    console.log("user created successfully");
 
     return res.status(201).json(newlyCreatedUser);
   } catch (error) {
@@ -55,6 +58,7 @@ export const login = async (req, res) => {
       message: "Please enter valid credentials...",
       error: parsed.error,
     });
+    console.log("Please enter valid credentials...")
   }
 
   try {

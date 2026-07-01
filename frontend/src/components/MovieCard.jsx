@@ -1,36 +1,36 @@
 import React from 'react'
 
-function MovieCard({ title, language, duration, genre, image, onClick }) {
+function MovieCard({ movie, onClick }) {
   return (
     <div
-      className="w-[280px] rounded-xl border border-[#e0e0e0] overflow-hidden cursor-pointer transition-transform duration-200 hover:-translate-y-1 bg-white"
+      className="w-[200px] rounded-xl border border-gray-200 overflow-hidden bg-white cursor-pointer hover:-translate-y-1 transition-transform duration-200"
       onClick={onClick}
     >
-      <div className="relative">
-        <img
-          src={image}
-          alt={title}
-          className="w-full h-[200px] object-cover block"
-        />
+      <img
+        src={movie.image}
+        alt={movie.name}
+        className="w-full h-[250px] object-cover block"
+      />
 
-        <span className="absolute top-[10px] left-[10px] bg-black/65 text-white text-[12px] px-[10px] py-[3px] rounded-full">
-          {genre}
-        </span>
-      </div>
-
-      <div className="px-4 pt-[14px] pb-4">
-        <h2 className="m-0 mb-[6px] text-[16px] whitespace-nowrap overflow-hidden text-ellipsis">
-          {title}
+      <div className="px-3 pt-2.5 pb-3">
+        <h2 className="m-0 mb-1 text-[15px] font-medium whitespace-nowrap overflow-hidden text-ellipsis text-gray-900">
+          {movie.title}
         </h2>
 
-        <div className="flex gap-[14px] text-[13px] text-[#666] mb-[14px]">
-          <span>🌐 {language}</span>
-          <span>🕐 {duration}</span>
-        </div>
+        <p className="text-xs text-gray-400 mb-2.5">
+          {movie.certification} | {movie.language}
+        </p>
 
-        <button className="w-full py-[9px] border border-[#1a73e8] bg-[#e8f0fe] text-[#1a73e8] rounded-lg text-[14px] font-medium cursor-pointer">
-          Book Ticket
-        </button>
+        <div className="flex items-center justify-between">
+          <div className="flex items-center gap-1 text-sm font-medium text-gray-800">
+            <span className="text-amber-400 text-base">★</span>
+            {movie.rating}
+          </div>
+
+          <button className="bg-orange-500 hover:bg-orange-600 text-white border-none rounded-full px-4 py-1.5 text-[13px] font-medium cursor-pointer transition-colors duration-150">
+            Book
+          </button>
+        </div>
       </div>
     </div>
   );

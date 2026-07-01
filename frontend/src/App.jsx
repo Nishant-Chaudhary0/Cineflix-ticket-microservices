@@ -10,11 +10,15 @@ import Login from './pages/Login'
 import Genres from './pages/Genres'
 import AllMovies from './pages/AllMovies'
 import AllBookings from './pages/AllBookings'
+import Show from './pages/Show'
+import { Toaster } from 'react-hot-toast'
 
 function App() {
   const [count, setCount] = useState(0)
 
   return (
+    <>
+    <Toaster position="top-right" />
     <BrowserRouter>
     <Routes>
       <Route path='/home' element={<Home/>}/>
@@ -23,8 +27,12 @@ function App() {
       <Route path='/genres' element={<Genres/>}/>
       <Route path='/all-movies' element={<AllMovies/>}/>
       <Route path='/all-bookings' element={<AllBookings/>}/>
+      <Route path='/show/:id' element={<Show/>}/>
     </Routes>
     </BrowserRouter>
+    
+    </>
+    
   )
 }
 

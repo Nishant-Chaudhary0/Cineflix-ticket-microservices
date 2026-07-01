@@ -5,7 +5,7 @@ const movieRouter = express.Router();
 
 movieRouter.post("/create-movie", createMovie);
 movieRouter.get("/get-all-movies", getAllMovies);
-movieRouter.get("/get-movie-by-id", getMovieById);
+movieRouter.get("/get-movie-by-id/:movieId", getMovieById);
 movieRouter.get("/get-movie-by-genre/:genre",getMovieGenre);
 
 export default movieRouter;

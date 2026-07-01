@@ -48,3 +48,33 @@ export const getAllShows = async(req, res) => {
         })
     }
 };
+
+export const getShowByMovie = async(req, res) => {
+    logger.info("Get show by movie endpoint hit...");
+    const movieId = req.params.id;
+
+    if(!movieId){
+        logger.error("movie id not provided");
+        return res.status(404).json({
+            message:"movie id not provided"
+        })
+    }
+
+    try {
+       const result = await Show.find({ movie: movieId }).populate("theatre", "theatreName")
+
+        if(!result){
+            logger.info("No show for such movie");
+            return res.status(404).json({
+                message:"No show for this movie"
+            })
+        }
+
+        return res.json(result);
+    } catch (error) {
+        logger.error("error in get show by movie route",error);
+        return res.status(500).json({
+            message:"Internal server error"
+        })
+    }
+}
