@@ -25,7 +25,7 @@ export const createShow = async (req, res) => {
             }
         }
 
-        const newlyCreatedShow = await Show.create({theatre, showTime, showDate, showDay, movie, price, seats});
+        const newlyCreatedShow = await Show.create({theatre, showTime, showDate, showDay, movie, price, seatsAvailable:seats});
         return res.status(201).json(newlyCreatedShow);
     } catch (error) {
         logger.error("error creating new show...",error);
@@ -76,5 +76,39 @@ export const getShowByMovie = async(req, res) => {
         return res.status(500).json({
             message:"Internal server error"
         })
+    }
+}
+
+export const getShowByShowId = async(req, res) => {
+    logger.info("Get show by show id endpoint hit");
+
+    const {id} = req.params;
+    if(!id){
+        logger.info("please provide show id")
+        return res.status(404).json({
+            message:"Invalid show"
+        })
+    }
+
+    try {
+        const result = await Show.findById(id)
+        res.status(201).json(result);
+    } catch (error) {
+         logger.error("error in get show by showid route",error);
+        return res.status(500).json({
+            message:"Internal server error"
+        })
+    }
+}
+
+export const updateseatStatus = async(req, res) => {
+    logger.info("update seat status endpoint hit...");
+
+    const seat = req.body;
+    try {
+        const result = await Show.find(seat);
+        console.log(result);
+    } catch (error) {
+         logger.error("error updating seat",error);
     }
 }

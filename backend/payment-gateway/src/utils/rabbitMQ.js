@@ -35,4 +35,19 @@ async function consumeEvent(routingKey, callback){
     console.log("subscribed to event")
 }
 
-export  {consumeEvent,connectRabbitmq};
+async function publishEvent(routingKey, message){
+
+    if(!channel){
+        await connectRabbitmq();
+    }
+
+    channel.publish(
+        EXCHANGE_NAME,
+        routingKey,
+        Buffer.from(JSON.stringify(message))
+    );
+
+    console.log("event published")
+}
+
+export  {consumeEvent,connectRabbitmq, publishEvent};

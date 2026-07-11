@@ -8,7 +8,7 @@ const bookingSchema = new mongoose.Schema({
   },
   movie:{
     type: mongoose.Schema.Types.ObjectId,
-    ref:"Movie",
+    ref:"Movies",
     required: true
   },
   show:{
@@ -23,7 +23,8 @@ const bookingSchema = new mongoose.Schema({
   },
   paymentstatus:{
     type:String,
-    enum: ["success","failed"]
+    default:"pending",
+    enum: ["success","pending","failed"]
   }
 },{timestamps: true});
 

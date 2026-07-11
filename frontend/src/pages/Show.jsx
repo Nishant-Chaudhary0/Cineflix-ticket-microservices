@@ -27,18 +27,21 @@ const Show = () => {
    getMovie();
   },[id])
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-[#0B0E1A]">
       <MovieDetail movie={movie}/>
 
-      <div className="mx-auto max-w-4xl px-4 py-6 sm:px-6 lg:px-8">
-        <h2 className="mb-4 text-lg font-bold text-gray-900 sm:text-xl">
+      <div className="mx-auto max-w-4xl px-4 py-8 sm:px-6 lg:px-8">
+        <span className="font-mono-tix text-xs uppercase tracking-widest text-[#5C6280]">
+          Pick a Slot
+        </span>
+        <h2 className="mb-4 mt-1 text-lg font-bold text-[#E7E9F5] sm:text-xl">
           Available Shows
         </h2>
 
         <div className="flex flex-col gap-3 sm:gap-4">
           {
             showData.map((showData) => (
-              <ShowCard key={showData._id} show={showData}/>
+              <ShowCard key={showData._id} show={showData} />
             ))
           }
         </div>

@@ -1,25 +1,25 @@
 import React, { useState } from 'react'
 import toast from 'react-hot-toast'
 import axios from 'axios'
-import {useNavigate} from 'react-router-dom'
+import { useNavigate, NavLink } from 'react-router-dom'
 
 const SignUp = () => {
   const navigate = useNavigate();
   const [formData, setForm] = useState({
-    username :'',
-    email:'',
-    password:''
+    username: '',
+    email: '',
+    password: ''
   })
   const [loading, setLoading] = useState(false)
 
-  function handleChange(e){
-    setForm({...formData,
-    [e.target.name] : e.target.value})
+  function handleChange(e) {
+    setForm({
+      ...formData,
+      [e.target.name]: e.target.value
+    })
   }
 
- 
-
- async function submit (e){
+  async function submit(e) {
     e.preventDefault();
     setLoading(true);
 
@@ -29,31 +29,44 @@ const SignUp = () => {
       navigate("/login")
     } catch (error) {
       toast.error(error.response.data.message);
-      console.log("Failed to create account",error);
-    }finally{
+      console.log("Failed to create account", error);
+    } finally {
       setLoading(false);
     }
   }
-  return (
-     <div className="min-h-screen bg-black/50 flex items-center justify-center">
-      <div className="w-[360px] rounded-2xl overflow-hidden bg-white shadow-xl">
 
-        {/* Purple Header */}
-        <div className="bg-gradient-to-br from-violet-600 via-purple-500 to-purple-300 px-8 pt-8 pb-10 text-center">
-          <h1 className="text-3xl font-black text-white tracking-tight">district</h1>
-          <p className="text-[10px] tracking-[3px] text-white/70 mt-1 mb-4">BY ZOMATO</p>
-          <p className="text-white/90 text-sm">Experience the best in Dining, Movies, and Events.</p>
+  return (
+    <div className="flex min-h-screen items-center justify-center bg-[#0B0E1A] px-4 py-12">
+      <div className="w-full max-w-[400px] overflow-hidden rounded-2xl border border-[#262B42] bg-[#141827] shadow-2xl">
+
+        {/* Marquee header */}
+        <div className="relative px-8 pb-8 pt-9 text-center">
+          <div className="absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-[#7C5CFC]/20 to-transparent" />
+          <div className="relative flex flex-col items-center gap-3">
+            <span className="flex h-11 w-11 items-center justify-center rounded-md bg-[#7C5CFC] font-mono-tix text-lg font-bold text-[#0B0E1A] shadow-[0_0_20px_rgba(124,92,252,0.55)]">
+              C
+            </span>
+            <h1 className="font-mono-tix text-2xl font-bold tracking-wide text-[#E7E9F5]">
+              CINE<span className="text-[#22D3EE]">FLIX</span>
+            </h1>
+            <span className="mm-glow-bar w-32" />
+            <p className="font-mono-tix text-xs uppercase tracking-widest text-[#5C6280]">
+              Admit One · New Account
+            </p>
+          </div>
         </div>
 
+        {/* Ticket tear */}
+        <div className="mm-tear" />
+
         {/* Form Body */}
-        <div className="px-6 py-7">
-          <h2 className="text-xl font-semibold text-center text-gray-900 mb-1">Create your account</h2>
-          <p className="text-sm text-gray-400 text-center mb-6">Sign up to get started</p>
+        <div className="px-7 py-8">
+          <h2 className="mb-1 text-center text-xl font-semibold text-[#E7E9F5]">Create your account</h2>
+          <p className="mb-6 text-center text-sm text-[#8A90A8]">Sign up to get started</p>
 
           <form onSubmit={submit} className="space-y-4">
-
             <div>
-              <label className="text-sm font-medium text-gray-700 mb-1 block">Username</label>
+              <label className="mb-1.5 block font-mono-tix text-xs uppercase tracking-widest text-[#8A90A8]">Username</label>
               <input
                 type="text"
                 name="username"
@@ -61,12 +74,12 @@ const SignUp = () => {
                 onChange={handleChange}
                 placeholder="johndoe"
                 required
-                className="w-full h-11 px-4 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="h-11 w-full rounded-md border border-[#2E3550] bg-[#0E1220] px-4 text-sm text-[#E7E9F5] placeholder:text-[#5C6280] focus:border-[#7C5CFC] focus:outline-none focus:ring-2 focus:ring-[#7C5CFC]/40"
               />
             </div>
 
             <div>
-              <label className="text-sm font-medium text-gray-700 mb-1 block">Email</label>
+              <label className="mb-1.5 block font-mono-tix text-xs uppercase tracking-widest text-[#8A90A8]">Email</label>
               <input
                 type="email"
                 name="email"
@@ -74,12 +87,12 @@ const SignUp = () => {
                 onChange={handleChange}
                 placeholder="john@example.com"
                 required
-                className="w-full h-11 px-4 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="h-11 w-full rounded-md border border-[#2E3550] bg-[#0E1220] px-4 text-sm text-[#E7E9F5] placeholder:text-[#5C6280] focus:border-[#7C5CFC] focus:outline-none focus:ring-2 focus:ring-[#7C5CFC]/40"
               />
             </div>
 
             <div>
-              <label className="text-sm font-medium text-gray-700 mb-1 block">Password</label>
+              <label className="mb-1.5 block font-mono-tix text-xs uppercase tracking-widest text-[#8A90A8]">Password</label>
               <input
                 type="password"
                 name="password"
@@ -87,29 +100,31 @@ const SignUp = () => {
                 onChange={handleChange}
                 placeholder="••••••••"
                 required
-                className="w-full h-11 px-4 rounded-xl border border-gray-200 text-sm focus:outline-none focus:ring-2 focus:ring-purple-500 focus:border-transparent"
+                className="h-11 w-full rounded-md border border-[#2E3550] bg-[#0E1220] px-4 text-sm text-[#E7E9F5] placeholder:text-[#5C6280] focus:border-[#7C5CFC] focus:outline-none focus:ring-2 focus:ring-[#7C5CFC]/40"
               />
             </div>
-{/* 
-            {error && (
-              <p className="text-red-500 text-sm text-center">{error}</p>
-            )} */}
 
             <button
               type="submit"
               disabled={loading}
-              className="w-full h-12 bg-black text-white rounded-xl text-sm font-semibold mt-2 hover:bg-gray-900 transition-colors disabled:opacity-50"
+              className="mt-2 h-12 w-full rounded-md bg-[#7C5CFC] font-mono-tix text-sm font-bold uppercase tracking-widest text-white shadow-[0_0_18px_rgba(124,92,252,0.4)] transition-colors hover:bg-[#8F72FF] disabled:opacity-50"
             >
-              {loading ? 'Creating account...' : 'Continue'}
+              {loading ? 'Creating account…' : 'Continue'}
             </button>
-
           </form>
 
-          <p className="text-xs text-gray-400 text-center mt-5">
+          <p className="mt-6 text-center text-sm text-[#8A90A8]">
+            Already have an account?{' '}
+            <NavLink to="/login" className="font-semibold text-[#22D3EE] hover:underline">
+              Log in
+            </NavLink>
+          </p>
+
+          <p className="mt-4 text-center text-xs text-[#5C6280]">
             By continuing, you agree to our{' '}
-            <span className="underline cursor-pointer">Terms of Service</span>
-            {' '}&nbsp;
-            <span className="underline cursor-pointer">Privacy Policy</span>
+            <span className="cursor-pointer underline">Terms of Service</span>
+            {' '}&{' '}
+            <span className="cursor-pointer underline">Privacy Policy</span>
           </p>
         </div>
 
