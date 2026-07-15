@@ -8,9 +8,9 @@ const Footer = () => {
         <div className="grid grid-cols-1 gap-10 md:grid-cols-4">
           <div>
             <div className="flex items-center gap-2.5">
-              <span className="flex h-8 w-8 items-center justify-center rounded-md bg-[#7C5CFC] font-mono-tix text-sm font-bold text-[#0B0E1A]">
+              {/* <span className="flex h-8 w-8 items-center justify-center rounded-md bg-[#7C5CFC] font-mono-tix text-sm font-bold text-[#0B0E1A]">
                 C
-              </span>
+              </span> */}
               <span className="font-mono-tix text-lg font-bold tracking-wide text-[#E7E9F5]">
                 CINE<span className="text-[#22D3EE]">FLIX</span>
               </span>

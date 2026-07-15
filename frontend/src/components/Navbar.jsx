@@ -14,9 +14,9 @@ const Navbar = () => {
     <header className="sticky top-0 z-50 bg-[#0B0E1A]/95 backdrop-blur border-b border-dashed border-[#262B42]">
       <div className="mx-auto flex max-w-7xl items-center justify-between px-4 py-3.5 sm:px-6 lg:px-8">
         <NavLink to="/home" className="flex items-center gap-2.5 group">
-          <span className="relative flex h-8 w-8 items-center justify-center rounded-md bg-[#7C5CFC] font-mono-tix text-sm font-bold text-[#0B0E1A] shadow-[0_0_16px_rgba(124,92,252,0.55)] transition-shadow group-hover:shadow-[0_0_22px_rgba(124,92,252,0.8)]">
+          {/* <span className="relative flex h-8 w-8 items-center justify-center rounded-md bg-[#7C5CFC] font-mono-tix text-sm font-bold text-[#0B0E1A] shadow-[0_0_16px_rgba(124,92,252,0.55)] transition-shadow group-hover:shadow-[0_0_22px_rgba(124,92,252,0.8)]">
             C
-          </span>
+          </span> */}
           <span className="font-mono-tix text-lg font-bold tracking-wide text-[#E7E9F5]">
             CINE<span className="text-[#22D3EE]">FLIX</span>
           </span>

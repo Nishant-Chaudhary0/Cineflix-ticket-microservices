@@ -1,17 +1,26 @@
-import React from 'react'
-
+import React, { useState } from 'react'
 
 const MovieDetail = ({ movie }) => {
+  const [posterError, setPosterError] = useState(false)
+  const bgImage = movie.backdrop || movie.image
 
   return (
-    <div
-      className="relative w-full min-h-[480px] bg-cover bg-center text-white"
-      style={{ backgroundImage: `url(${movie.image || movie.image})` }}
-    >
-      <div className="absolute inset-0 bg-[#0B0E1A]/85" />
+    <div className="relative w-full min-h-[480px] bg-[#0B0E1A] text-white overflow-hidden">
+      {/* Blurred ambient background */}
+      {bgImage && (
+        <div
+          className="absolute inset-0 scale-110 bg-cover bg-center blur-2xl"
+          style={{ backgroundImage: `url(${bgImage})` }}
+        />
+      )}
+
+      {/* Darkening overlay for text readability */}
       <div
-        className="absolute inset-0 opacity-60"
-        style={{ background: 'linear-gradient(180deg, rgba(11,14,26,0.2) 0%, rgba(11,14,26,0.95) 100%)' }}
+        className="absolute inset-0"
+        style={{
+          background:
+            'linear-gradient(90deg, rgba(11,14,26,0.9) 0%, rgba(11,14,26,0.75) 35%, rgba(11,14,26,0.5) 60%, rgba(11,14,26,0.3) 100%)',
+        }}
       />
 
       <div className="relative z-10 mx-auto flex max-w-7xl flex-col items-center justify-between gap-10 px-6 py-16 lg:flex-row lg:items-start lg:px-10">
@@ -56,23 +65,20 @@ const MovieDetail = ({ movie }) => {
 
         <div className="relative flex-shrink-0">
           <div className="absolute -inset-2 rounded-xl bg-[#7C5CFC]/20 blur-2xl" />
-          <img
-            src={movie.image}
-            alt={movie.name}
-            className="relative w-64 rounded-xl border border-[#2E3550] object-cover shadow-2xl md:w-80"
-          />
-          <div className="absolute inset-0 flex items-center justify-center">
-            <div className="flex h-14 w-14 items-center justify-center rounded-full border border-white/40 bg-white/10 backdrop-blur-sm">
-              <svg
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 24 24"
-                fill="white"
-                className="ml-1 h-6 w-6"
-              >
-                <path d="M8 5v14l11-7z" />
-              </svg>
+          {!posterError && movie.image ? (
+            <img
+              src={movie.image}
+              alt={movie.name}
+              loading="lazy"
+              decoding="async"
+              onError={() => setPosterError(true)}
+              className="relative w-64 aspect-[2/3] rounded-xl border border-[#2E3550] object-cover shadow-2xl md:w-80"
+            />
+          ) : (
+            <div className="relative flex w-64 aspect-[2/3] items-center justify-center rounded-xl border border-[#2E3550] bg-[#141827] text-sm text-[#5C6280] md:w-80">
+              No image available
             </div>
-          </div>
+          )}
         </div>
       </div>
     </div>

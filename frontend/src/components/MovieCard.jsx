@@ -20,7 +20,7 @@ function MovieCard({ movie, onClick }) {
 
       <div className="px-3 pb-3 pt-2.5">
         <h2 className="m-0 mb-1 truncate text-[15px] font-semibold text-[#E7E9F5]">
-          {movie.title}
+          {movie.name}
         </h2>
 
         <p className="mb-3 font-mono-tix text-[11px] uppercase tracking-wide text-[#5C6280]">
