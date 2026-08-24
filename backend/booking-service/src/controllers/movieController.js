@@ -1,4 +1,4 @@
-import logger from "../../../auth-service/src/utils/logger.js";
+import logger from "../utils/logger.js";
 import redis from "../lib/redis.js";
 import { Movies } from "../models/movie.js";
 import { movieSchemaValidation } from "../utils/validation.js";

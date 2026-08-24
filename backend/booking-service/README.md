@@ -1,1 +1,0 @@
-# Cineflix-ticket-microservices
