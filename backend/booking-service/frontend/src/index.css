@@ -1,0 +1,101 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=JetBrains+Mono:wght@400;500;600;700&display=swap');
+
+:root {
+  --mm-bg: #0B0E1A;
+  --mm-bg-alt: #0E1220;
+  --mm-surface: #141827;
+  --mm-surface-2: #1B2033;
+  --mm-border: #262B42;
+  --mm-border-2: #2E3550;
+  --mm-text: #E7E9F5;
+  --mm-text-dim: #C7CBE0;
+  --mm-text-mute: #8A90A8;
+  --mm-text-faint: #5C6280;
+  --mm-violet: #7C5CFC;
+  --mm-violet-hi: #8F72FF;
+  --mm-cyan: #22D3EE;
+  --mm-gold: #F5B942;
+  --mm-red: #FB7185;
+}
+
+html, body {
+  background-color: var(--mm-bg);
+  color: var(--mm-text);
+}
+
+body {
+  font-family: 'Space Grotesk', ui-sans-serif, system-ui, sans-serif;
+  background-image:
+    radial-gradient(ellipse 60% 40% at 15% 0%, rgba(124,92,252,0.10), transparent 60%),
+    radial-gradient(ellipse 50% 35% at 100% 10%, rgba(34,211,238,0.07), transparent 60%);
+  background-attachment: fixed;
+}
+
+.font-mono-tix {
+  font-family: 'JetBrains Mono', ui-monospace, monospace;
+}
+
+/* Reusable perforated ticket-cut divider */
+.mm-tear {
+  border-top: 2px dashed var(--mm-border-2);
+  position: relative;
+}
+
+/* Film-reel sprocket dot strip, used as a small decorative accent */
+.mm-sprockets {
+  display: flex;
+  gap: 10px;
+}
+.mm-sprockets span {
+  width: 5px;
+  height: 5px;
+  border-radius: 9999px;
+  background: var(--mm-border-2);
+}
+
+/* Marquee glow bar */
+.mm-glow-bar {
+  position: relative;
+  height: 3px;
+  border-radius: 9999px;
+}
+.mm-glow-bar::before {
+  content: '';
+  position: absolute;
+  inset: -8px 0;
+  border-radius: 9999px;
+  filter: blur(14px);
+  opacity: 0.75;
+  background: linear-gradient(90deg, transparent, #7C5CFC, #22D3EE, #7C5CFC, transparent);
+}
+.mm-glow-bar::after {
+  content: '';
+  position: absolute;
+  inset: 0;
+  border-radius: 9999px;
+  background: linear-gradient(90deg, transparent, #C9BEFF, #A5F3FC, #C9BEFF, transparent);
+}
+
+/* Scrollbar to match theme */
+::-webkit-scrollbar { width: 10px; height: 10px; }
+::-webkit-scrollbar-track { background: var(--mm-bg); }
+::-webkit-scrollbar-thumb { background: var(--mm-border-2); border-radius: 9999px; }
+::-webkit-scrollbar-thumb:hover { background: var(--mm-violet); }
+
+/* Ticket punch-hole corner on cards */
+.mm-ticket-corner {
+  position: relative;
+}
+.mm-ticket-corner::before,
+.mm-ticket-corner::after {
+  content: '';
+  position: absolute;
+  top: -1px;
+  width: 14px;
+  height: 14px;
+  background: var(--mm-bg);
+  border: 1px solid var(--mm-border);
+  border-radius: 9999px;
+}
+.mm-ticket-corner::before { left: -8px; }
+.mm-ticket-corner::after { right: -8px; }

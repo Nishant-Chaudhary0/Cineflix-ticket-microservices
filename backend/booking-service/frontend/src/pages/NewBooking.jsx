@@ -107,7 +107,13 @@ const NewBooking = () => {
             }
           );
 
-          
+          console.log("the curr booking Id", bookingId);
+          console.log("the curr booking Id", bookingId);
+
+          console.log("the curr booking Id", bookingId);
+
+          console.log("the curr booking Id", bookingId);
+          console.log("the curr booking Id", bookingId);
 
 
           toast.success("Payment Successful");

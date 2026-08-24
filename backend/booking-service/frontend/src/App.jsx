@@ -11,11 +11,6 @@ import { Toaster } from 'react-hot-toast'
 import NewBooking from './pages/NewBooking'
 import Navbar from './components/Navbar'
 import Footer from './components/Footer'
-import AdminLogin from './pages/AdminLogin'
-import AdminOverview from './pages/AdminOverview'
-import CreateMovie from './pages/CreateMovie'
-import CreateShow from './pages/CreateShow'
-import CreateTheatre from './pages/CreateTheatre'
 
 function App() {
   return (
@@ -46,11 +41,6 @@ function App() {
               <Route path='/all-bookings' element={<AllBookings/>}/>
               <Route path='/show/:id' element={<Show/>}/>
               <Route path='/new-booking/:id' element={<NewBooking/>}/>
-              <Route path='/admin-dashboard' element={<AdminLogin/>}/>
-              <Route path='/overview' element={<AdminOverview/>}/>
-              <Route path='/create-movie' element={<CreateMovie/>}/>
-              <Route path='/create-show' element={<CreateShow/>}/>
-              <Route path='/create-theatre' element={<CreateTheatre/>}/>
             </Routes>
           </main>
           <Footer />
