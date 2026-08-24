@@ -23,3 +23,18 @@ export const createTheatre = async(req, res) => {
         })
     }
 }
+
+export const getAllTheatres = async(req, res) => {
+    logger.info("get all theatre endpoint hit...")
+
+    try {
+       const result = await Theatre.find();
+       
+       res.status(200).json(result);
+    } catch (error) {
+        logger.error("error creating new theatre...",error);
+        res.status(500).json({
+            message:"Internal server error..."
+        })
+    }
+}

@@ -6,33 +6,39 @@ import { consumeEvent } from "../utils/rabbitMQ.js";
 export const payment_success = async () => {
   await consumeEvent("booking-service.payment.success", "payment.success", async (data) => {
     console.log("payment success event consumed", data);
-
-    await Booking.findByIdAndUpdate(data.bookingId, {
-      paymentstatus: "success",
-    });
-
-    if (data.seats?.length) {
-      await Show.updateOne(
-        { _id: data.showId },
-        {
-          $set: {
-            "seatsAvailable.$[seat].status": "booked",
-          },
-        },
-        {
-          arrayFilters: [
-            {
-              "seat.seatNumber": {
-                $in: data.seats,
-              },
-            },
-          ],
-        }
+    try {
+      const updated = await Booking.findByIdAndUpdate(
+        data.bookingId,
+        { paymentstatus: "success" },
+        { new: true }
       );
-    }
 
-    for (const seat of data.seats || []) {
-      await redis.del(`seatLock:${data.showId}:${seat}`);
+      await redis.del("bookings:all");
+      if (updated?.user) await redis.del(`bookings:${updated.user}`);
+
+      if (data.seats?.length) {
+        await Show.updateOne(
+          { _id: data.showId },
+          {
+            $set: {
+              "seatsAvailable.$[seat].status": "booked",
+            },
+          },
+          {
+            arrayFilters: [
+              {
+                "seat.seatNumber": { $in: data.seats },
+              },
+            ],
+          }
+        );
+      }
+
+      for (const seat of data.seats || []) {
+        await redis.del(`seatLock:${data.showId}:${seat}`);
+      }
+    } catch (err) {
+      console.error("Error handling payment.success", err);
     }
   });
 };
