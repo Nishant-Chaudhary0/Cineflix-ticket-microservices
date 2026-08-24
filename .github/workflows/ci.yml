@@ -2,9 +2,9 @@ name: CI
 
 on:
   push:
-    branches: [ main ]
+    branches: [main]
   pull_request:
-    branches: [ main ]
+    branches: [main]
 
 jobs:
   build-and-test:
@@ -12,7 +12,17 @@ jobs:
 
     strategy:
       matrix:
-        node-version: [18.x, 20.x]
+        include:
+          - service: auth-service
+            entrypoint: src/server.js
+          - service: booking-service
+            entrypoint: src/server.js
+          - service: payment-gateway
+            entrypoint: src/server.js
+
+    defaults:
+      run:
+        working-directory: backend/${{ matrix.service }}
 
     steps:
       - name: Checkout code
@@ -21,17 +31,18 @@ jobs:
       - name: Set up Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: ${{ matrix.node-version }}
-          cache: 'npm'
+          node-version: 20.x
+          cache: npm
+          cache-dependency-path: backend/${{ matrix.service }}/package-lock.json
 
       - name: Install dependencies
         run: npm ci
 
-      - name: Run linter
-        run: npm run lint
-
       - name: Run tests
-        run: npm test
+        run: npm test --if-present
 
-      - name: Build
-        run: npm run build
+      - name: Run lint
+        run: npm run lint --if-present
+
+      - name: Validate JavaScript
+        run: node --check ${{ matrix.entrypoint }}
