@@ -11,7 +11,7 @@ const app = express();
 const PORT = process.env.PORT || 3003;
 
 app.use(express.json());
-app.use(cors());
+app.use(cors({ origin: ['https://cineflix-three-beta.vercel.app/', 'http://localhost:5173'] })); 
 app.use("/v1/api/payments", paymentRoute);
 
 async function startServer() {

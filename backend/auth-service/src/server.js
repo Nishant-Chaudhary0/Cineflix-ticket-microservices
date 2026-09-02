@@ -10,7 +10,7 @@ const app = express();
 const port = process.env.PORT || 3001;
 dbConnect();
 
-app.use(cors());
+app.use(cors({ origin: ['https://cineflix-three-beta.vercel.app/', 'http://localhost:5173'] })); 
 app.use(express.json());
 app.use("/api/v1/auth", route);
 
