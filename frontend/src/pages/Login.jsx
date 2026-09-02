@@ -21,7 +21,7 @@ const Login = () => {
     setLoading(true);
 
     try {
-      const result = await axios.post("http://localhost:3001/api/v1/auth/login", formData);
+      const result = await axios.post(`${import.meta.env.VITE_AUTH_URL}/api/v1/auth/login`, formData);
       localStorage.setItem("accessToken", result.data.accessToken);
       toast.success("Login Successfully!");
       navigate("/home");
