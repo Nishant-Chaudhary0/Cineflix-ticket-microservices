@@ -1,0 +1,126 @@
+name: cineflix
+
+services:
+  # ---------- infra ----------
+  mongo:
+    image: mongo:7
+    container_name: cineflix-mongo
+    restart: unless-stopped
+    ports:
+      - "27017:27017"
+    volumes:
+      - mongo_data:/data/db
+    healthcheck:
+      test: ["CMD", "mongosh", "--quiet", "--eval", "db.adminCommand('ping')"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 10s
+
+  redis:
+    image: redis:7-alpine
+    container_name: cineflix-redis
+    restart: unless-stopped
+    ports:
+      - "6379:6379"
+    volumes:
+      - redis_data:/data
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+      start_period: 5s
+
+  rabbitmq:
+    image: rabbitmq:3-management-alpine
+    container_name: cineflix-rabbitmq
+    restart: unless-stopped
+    ports:
+      - "5672:5672"   # AMQP
+      - "15672:15672" # management UI -> http://localhost:15672 (guest/guest)
+    volumes:
+      - rabbitmq_data:/var/lib/rabbitmq
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "check_port_connectivity"]
+      interval: 5s
+      timeout: 5s
+      retries: 20
+      start_period: 30s
+
+  # ---------- services ----------
+  auth-service:
+    build:
+      context: ./backend/auth-service
+    container_name: cineflix-auth
+    restart: unless-stopped
+    env_file:
+      - ./backend/auth-service/.env
+    environment:
+      # override localhost-style values from .env for the compose network
+      - MONGODB_URI=mongodb://mongo:27017/cineflix_auth
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_URL=redis://redis:6379
+    ports:
+      - "3001:3001"
+    depends_on:
+      mongo:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./backend/auth-service/src:/app/src
+    command: ["node", "--watch", "src/server.js"]
+
+  booking-service:
+    build:
+      context: ./backend/booking-service
+    container_name: cineflix-booking
+    restart: unless-stopped
+    env_file:
+      - ./backend/booking-service/.env
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/cineflix_booking
+      - REDIS_HOST=redis
+      - REDIS_PORT=6379
+      - REDIS_URL=redis://redis:6379
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    ports:
+      - "3002:3002"
+    depends_on:
+      mongo:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    volumes:
+      - ./backend/booking-service/src:/app/src
+    command: ["node", "--watch", "src/server.js"]
+
+  payment-gateway:
+    build:
+      context: ./backend/payment-gateway
+    container_name: cineflix-payment
+    restart: unless-stopped
+    env_file:
+      - ./backend/payment-gateway/.env
+    environment:
+      - MONGODB_URI=mongodb://mongo:27017/cineflix_payment
+      - RABBITMQ_URL=amqp://rabbitmq:5672
+    ports:
+      - "3003:3003"
+    depends_on:
+      mongo:
+        condition: service_healthy
+      rabbitmq:
+        condition: service_healthy
+    volumes:
+      - ./backend/payment-gateway/src:/app/src
+    command: ["node", "--watch", "src/server.js"]
+
+volumes:
+  mongo_data:
+  redis_data:
+  rabbitmq_data:

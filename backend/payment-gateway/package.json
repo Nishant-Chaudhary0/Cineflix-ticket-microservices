@@ -12,10 +12,10 @@
   "license": "ISC",
   "description": "",
   "dependencies": {
-    "ampq": "^2019.5.11",
+
     "amqplib": "^2.0.1",
     "cors": "^2.8.6",
-    "crypto": "^1.0.1",
+    
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "mongodb": "^7.2.0",
